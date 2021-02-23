@@ -1,0 +1,14 @@
+.navbar{
+    background-color: rgb(34, 34, 34) !important;
+    display: flex !important;
+    justify-content: space-between !important;
+}
+.logo{
+    color: white !important;
+    margin-right: auto;
+}
+
+.logo > p{
+    font-weight: bold !important;
+    font-size: large !important;
+}

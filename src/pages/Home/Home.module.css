@@ -1,0 +1,9 @@
+.home{
+    min-height: 100vh;
+    height: 100%;
+    /* background-color: lavender; */
+}
+
+.grid{
+    padding: 3rem 0;
+}

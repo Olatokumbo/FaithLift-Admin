@@ -1,0 +1,21 @@
+.card{
+    margin:1rem !important; 
+    height: 10rem !important;
+    background-color: lavender !important;
+}
+.cardContent{
+    text-align: center;
+    height: 100% !important;
+}
+.title{
+    text-align: center;
+    font-size: 1.2rem !important;
+}
+
+.icon{
+    display: block !important;
+    margin: auto !important;
+    width: 5rem !important;
+    height: auto !important;
+    color: rgb(61, 154, 185) !important;
+} 
