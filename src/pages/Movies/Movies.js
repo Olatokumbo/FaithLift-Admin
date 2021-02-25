@@ -1,4 +1,4 @@
-import React,{ useEffect } from "react";
+import React, { useEffect } from "react";
 import {
   Typography,
   IconButton,
@@ -14,11 +14,11 @@ import {
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import { connect } from "react-redux";
 import * as actionCreator from "../../store/actions";
+import { Link } from "react-router-dom";
 import style from "./Movies.module.css";
 
-const Movies = ({movies, fetchMovies}) => {
-
-  useEffect(()=>{
+const Movies = ({ movies, fetchMovies }) => {
+  useEffect(() => {
     fetchMovies();
   }, [fetchMovies]);
   return (
@@ -51,9 +51,11 @@ const Movies = ({movies, fetchMovies}) => {
                 <TableCell align="center">{movie.director}</TableCell>
                 <TableCell align="center">{movie.year}</TableCell>
                 <TableCell align="center">
-                  <IconButton>
-                    <VisibilityIcon />
-                  </IconButton>
+                  <Link to={`/movie/${movie.id}`}>
+                    <IconButton>
+                      <VisibilityIcon />
+                    </IconButton>
+                  </Link>
                 </TableCell>
               </TableRow>
             ))}
@@ -64,15 +66,15 @@ const Movies = ({movies, fetchMovies}) => {
   );
 };
 
-const mapStateToProps = (state) =>{
+const mapStateToProps = (state) => {
   return {
-    movies: state.movies.movieList
-  }
-}
+    movies: state.movies.movieList,
+  };
+};
 
-const mapDispatchToProps = (dispatch) =>{
+const mapDispatchToProps = (dispatch) => {
   return {
-    fetchMovies: ()=>dispatch(actionCreator.fetchMovies())
-  }
-} 
-export default connect (mapStateToProps, mapDispatchToProps)(Movies);
+    fetchMovies: () => dispatch(actionCreator.fetchMovies()),
+  };
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Movies);

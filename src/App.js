@@ -5,6 +5,7 @@ import Home from "./pages/Home/Home";
 import Movies from "./pages/Movies/Movies";
 import PrivateRoute from "./hoc/PrivateRoute";
 import PublicRoute from "./hoc/PublicRoute";
+import MovieInfo from "./pages/MovieInfo/MovieInfo";
 import "./App.css";
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <PublicRoute exact path="/" component={Signin} />
         <PrivateRoute path="/home" component={Home} />
         <PrivateRoute path="/movies" component={Movies} />
+        <PrivateRoute path="/movie/:id" component={MovieInfo} />
       </Switch>
     </Router>
   );
