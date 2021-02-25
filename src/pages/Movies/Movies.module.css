@@ -1,0 +1,12 @@
+.moviesPage{
+    padding: 1rem;
+}
+
+.title{
+    font-size: 2rem !important;
+    font-weight: 600 !important;
+}
+
+.addBtn{
+    /* background-color: black !important; */
+}
