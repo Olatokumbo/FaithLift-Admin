@@ -1,0 +1,1 @@
+export { fetchMovies, fetchMovieInfo} from "./movies";
