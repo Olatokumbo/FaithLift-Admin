@@ -3,9 +3,10 @@ import { Typography, TextField, Button, Chip } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actionCreator from "../../store/actions";
+// import moment from 
 import style from "./MovieInfo.module.css";
 
-const MovieInfo = ({ fetchMovieInfo }) => {
+const MovieInfo = ({ fetchMovieInfo, movieInfo }) => {
   const params = useParams();
   const [name, setName] = useState("");
   const [info, setInfo] = useState("");
@@ -13,7 +14,7 @@ const MovieInfo = ({ fetchMovieInfo }) => {
   const [writer, setWriter] = useState("");
   const [releasedDate, setReleasedDate] = useState(null);
   const [year, setYear] = useState(0);
-  const [youtubeURL, setYoutubeUrl] = useState("");
+  const [youtubeUrl, setYoutubeUrl] = useState("");
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [castMember, setCastMember] = useState("");
@@ -33,6 +34,22 @@ const MovieInfo = ({ fetchMovieInfo }) => {
     fetchMovieInfo(params.id);
   }, [fetchMovieInfo, params.id]);
 
+  useEffect(()=>{
+    setName(movieInfo?.name);
+    setInfo(movieInfo?.info);
+    setDirector(movieInfo?.director);
+    setWriter(movieInfo?.writer);
+    setReleasedDate(movieInfo?.releasedDate);
+    setYear(movieInfo?.year);
+    setYoutubeUrl(movieInfo?.youtubeUrl);
+    setHours(movieInfo?.duration.hours);
+    setMinutes(movieInfo?.duration.minutes);
+    setCasts(movieInfo?.casts)
+  }, [movieInfo])
+
+  if (!name) {
+    return <div>Loading...</div>;
+  }
   return (
     <div className={style.movieInfo}>
       <Typography className={style.title}>Movie Info</Typography>
@@ -120,7 +137,7 @@ const MovieInfo = ({ fetchMovieInfo }) => {
           label="YouTubeURL"
           variant="outlined"
           size="small"
-          value={youtubeURL}
+          value={youtubeUrl}
           onChange={(e)=>setYoutubeUrl(e.target.value)}
           className={style.input}
           InputLabelProps={{
@@ -203,7 +220,7 @@ const MovieInfo = ({ fetchMovieInfo }) => {
 
 const mapStateToProps = (state) => {
   return {
-    movies: state.movies.movieList,
+    movieInfo: state.movies.movieInfo,
   };
 };
 

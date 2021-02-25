@@ -17,7 +17,6 @@ export const fetchMovies = () => {
       })
       .then(() => {
           dispatch({type: actionTypes.FETCH_MOVIES, movieList})
-        console.log(movieList);
         movieList = [];
       });
   };
@@ -30,7 +29,7 @@ export const fetchMovieInfo = (id) => {
       .doc(id)
       .get()
       .then((snapshot) => {
-        console.log(snapshot.data());
+        dispatch({type: actionTypes.FETCH_MOVIE_INFO, movieInfo: snapshot.data()})
       });
   };
 };

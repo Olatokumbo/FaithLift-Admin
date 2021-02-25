@@ -1,5 +1,3 @@
-import { bindActionCreators } from "redux";
-
 import * as actionTypes from "../actions/actionTypes";
 const initialState = {
   movieList: [],
@@ -16,7 +14,7 @@ const movieReducer = (state = initialState, action) => {
     case actionTypes.FETCH_MOVIE_INFO:
       return {
         ...state,
-        movieInfo: action.movies,
+        movieInfo: action.movieInfo,
       };
     default:
       return state;

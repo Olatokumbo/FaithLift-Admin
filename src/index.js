@@ -5,10 +5,12 @@ import thunk from "redux-thunk";
 import { createStore, applyMiddleware, combineReducers, compose } from "redux";
 import { movieReducer } from "./store/reducers";
 import App from "./App";
+import articleReducer from "./store/reducers/articles";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const rootReducer = combineReducers({
   movies: movieReducer,
+  articles: articleReducer
 });
 
 const store = createStore(
