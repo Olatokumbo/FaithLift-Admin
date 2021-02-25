@@ -4,9 +4,13 @@
 
 .title{
     font-size: 2rem !important;
-    font-weight: 600 !important;
+    font-weight: 300 !important;
 }
 
 .addBtn{
     /* background-color: black !important; */
+}
+
+.table{
+    margin-top: 1rem !important;
 }
