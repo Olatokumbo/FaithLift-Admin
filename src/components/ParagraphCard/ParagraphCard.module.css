@@ -1,0 +1,32 @@
+.card{
+    margin: 0.5rem 0 !important;
+    background-color: rgb(32, 32, 32) !important;
+    flex-direction: row !important;
+    display: flex !important;
+}
+
+.cardContent{
+    flex: 1 !important;
+}
+
+.title{
+    color: rgb(231, 231, 231) !important;
+    margin-bottom: 1rem !important;
+}
+
+.cardText{
+    color: white;
+    font-size: 1.1rem !important;
+}
+
+.actionArea{
+    padding: 0  1rem !important;
+}
+
+/* .iconButton{ */
+    /* margin: auto !important; */
+/* } */
+
+.deleteIcon{
+    color: rgb(255, 0, 55)  !important;
+}

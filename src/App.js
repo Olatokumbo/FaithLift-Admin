@@ -8,6 +8,7 @@ import PublicRoute from "./hoc/PublicRoute";
 import MovieInfo from "./pages/MovieInfo/MovieInfo";
 import Articles from "./pages/Articles/Articles";
 import "./App.css";
+import ArticleInfo from "./pages/ArticleInfo/ArticleInfo";
 const App = () => {
   return (
     <Router>
@@ -17,6 +18,7 @@ const App = () => {
         <PrivateRoute path="/movies" component={Movies} />
         <PrivateRoute path="/movie/:id" component={MovieInfo} />
         <PrivateRoute path="/articles" component={Articles} />
+        <PrivateRoute path="/article/:id" component={ArticleInfo} />
       </Switch>
     </Router>
   );

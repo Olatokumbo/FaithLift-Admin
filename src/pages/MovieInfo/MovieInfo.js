@@ -39,7 +39,7 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo }) => {
     setInfo(movieInfo?.info);
     setDirector(movieInfo?.director);
     setWriter(movieInfo?.writer);
-    setReleasedDate(moment(movieInfo?.releasedDate).format("MM/DD/YYYY"));
+    setReleasedDate(moment(movieInfo?.releasedDate.toDate()).format("YYYY-MM-DD"));
     setYear(movieInfo?.year);
     setYoutubeUrl(movieInfo?.youtubeUrl);
     setHours(movieInfo?.duration.hours);
@@ -211,9 +211,7 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo }) => {
           </div>
         </div>
       </div>
-      <Button size="large" variant="contained" color="primary">
-        Save
-      </Button>
+      <Button variant="contained" className={style.saveBtn}>Save</Button>
     </div>
   );
 };

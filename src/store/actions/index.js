@@ -1,2 +1,2 @@
 export { fetchMovies, fetchMovieInfo} from "./movies";
-export { fetchArticles} from "./articles";
+export { fetchArticles, fetchArticleInfo} from "./articles";

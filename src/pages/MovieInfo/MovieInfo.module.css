@@ -10,7 +10,7 @@
 .input{
     /* justify-self: center; */
     /* width: 100%; */
-    margin: 1rem !important;
+    margin: 1rem 0 !important;
 }
 
 .inputContainer{
@@ -44,4 +44,9 @@
 
 .castList > *{
     margin: 0.5rem 0 !important;
+}
+
+.saveBtn{
+    background-color: rgb(21, 146, 21) !important;
+    color: white !important;
 }
