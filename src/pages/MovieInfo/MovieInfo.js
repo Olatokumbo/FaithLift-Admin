@@ -3,7 +3,7 @@ import { Typography, TextField, Button, Chip } from "@material-ui/core";
 import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actionCreator from "../../store/actions";
-// import moment from 
+import moment from "moment";
 import style from "./MovieInfo.module.css";
 
 const MovieInfo = ({ fetchMovieInfo, movieInfo }) => {
@@ -39,7 +39,7 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo }) => {
     setInfo(movieInfo?.info);
     setDirector(movieInfo?.director);
     setWriter(movieInfo?.writer);
-    setReleasedDate(movieInfo?.releasedDate);
+    setReleasedDate(moment(movieInfo?.releasedDate).format("MM/DD/YYYY"));
     setYear(movieInfo?.year);
     setYoutubeUrl(movieInfo?.youtubeUrl);
     setHours(movieInfo?.duration.hours);
