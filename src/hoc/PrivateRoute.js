@@ -1,11 +1,12 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
+import { connect } from "react-redux"
 const PrivateRoute = ({isAuthenticated, component: Component, ...rest}) =>(
     <Route
     {...rest}
     component={(props) =>
-      true ? (
+      isAuthenticated ? (
         <div>
           <Navbar/>
             <Component {...props} />
@@ -17,5 +18,10 @@ const PrivateRoute = ({isAuthenticated, component: Component, ...rest}) =>(
   />
 )
 
+const mapStateToProps = (state)=>{
+  return{
+    isAuthenticated: state.auth.auth
+  }
+}
 
-export default PrivateRoute;
+export default connect(mapStateToProps)(PrivateRoute);
