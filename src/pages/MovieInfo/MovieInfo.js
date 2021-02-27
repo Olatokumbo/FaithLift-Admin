@@ -6,7 +6,7 @@ import * as actionCreator from "../../store/actions";
 import moment from "moment";
 import style from "./MovieInfo.module.css";
 
-const MovieInfo = ({ fetchMovieInfo, movieInfo }) => {
+const MovieInfo = ({ fetchMovieInfo, movieInfo, updateMovie }) => {
   const params = useParams();
   const [name, setName] = useState("");
   const [info, setInfo] = useState("");
@@ -30,22 +30,38 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo }) => {
     setCasts(casts.filter((cast) => cast !== removeCast));
   };
 
+  const update = () => {
+    updateMovie({
+      id: params.id,
+      name,
+      info,
+      director,
+      writer,
+      releasedDate: new Date(releasedDate),
+      year,
+      youtubeUrl,
+      duration: { hours, minutes },
+      casts,
+    });
+  };
   useEffect(() => {
     fetchMovieInfo(params.id);
   }, [fetchMovieInfo, params.id]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setName(movieInfo?.name);
     setInfo(movieInfo?.info);
     setDirector(movieInfo?.director);
     setWriter(movieInfo?.writer);
-    setReleasedDate(moment(movieInfo?.releasedDate.toDate()).format("YYYY-MM-DD"));
+    setReleasedDate(
+      moment(movieInfo?.releasedDate.toDate()).format("YYYY-MM-DD")
+    );
     setYear(movieInfo?.year);
     setYoutubeUrl(movieInfo?.youtubeUrl);
     setHours(movieInfo?.duration.hours);
     setMinutes(movieInfo?.duration.minutes);
-    setCasts(movieInfo?.casts)
-  }, [movieInfo])
+    setCasts(movieInfo?.casts);
+  }, [movieInfo]);
 
   if (!name) {
     return <div>Loading...</div>;
@@ -125,7 +141,7 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo }) => {
             variant="outlined"
             size="small"
             value={year}
-          onChange={(e)=>setYear(e.target.value)}
+            onChange={(e) => setYear(e.target.value)}
             className={style.input}
             InputLabelProps={{
               shrink: true,
@@ -138,7 +154,7 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo }) => {
           variant="outlined"
           size="small"
           value={youtubeUrl}
-          onChange={(e)=>setYoutubeUrl(e.target.value)}
+          onChange={(e) => setYoutubeUrl(e.target.value)}
           className={style.input}
           InputLabelProps={{
             shrink: true,
@@ -153,7 +169,7 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo }) => {
               variant="outlined"
               size="small"
               value={hours}
-              onChange={(e)=>setHours(parseInt(e.target.value))}
+              onChange={(e) => setHours(parseInt(e.target.value))}
               className={style.input}
               InputLabelProps={{
                 shrink: true,
@@ -165,7 +181,7 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo }) => {
               variant="outlined"
               size="small"
               value={minutes}
-              onChange={(e)=>setMinutes(parseInt(e.target.value))}
+              onChange={(e) => setMinutes(parseInt(e.target.value))}
               className={style.input}
               InputLabelProps={{
                 shrink: true,
@@ -211,7 +227,9 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo }) => {
           </div>
         </div>
       </div>
-      <Button variant="contained" className={style.saveBtn}>Save</Button>
+      <Button variant="contained" className={style.saveBtn} onClick={update}>
+        Save
+      </Button>
     </div>
   );
 };
@@ -225,6 +243,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     fetchMovieInfo: (id) => dispatch(actionCreator.fetchMovieInfo(id)),
+    updateMovie: (data) => dispatch(actionCreator.updateMovieInfo(data)),
   };
 };
 

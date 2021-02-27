@@ -29,3 +29,34 @@ export const fetchArticleInfo = (id) => {
     };
   };
 
+  export const updateArticleInfo = (data) => {
+    return () => {
+      firestore
+        .collection("articles")
+        .doc(data.id)
+        .update({
+          title: data.title,
+          message: data.message
+        })
+        .then(() => {
+          alert("Updated Successfully");
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    };
+  };
+  
+  export const deleteArticle = (id) => {
+    firestore
+    .collection("articles")
+    .doc(id)
+    .delete()
+    .then(()=>{
+      alert("Document has been Deleted")
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+  } 
+  
