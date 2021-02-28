@@ -37,7 +37,7 @@ const ArticleInfo = ({ articleInfo, fetchArticleInfo, updateArticle, deleteArtic
     setTitle(articleInfo?.title);
     setMessage(articleInfo?.message);
   }, [articleInfo]);
-  if (!title) {
+  if (!articleInfo) {
     return <div>Loading...</div>;
   }
   return (
@@ -48,7 +48,7 @@ const ArticleInfo = ({ articleInfo, fetchArticleInfo, updateArticle, deleteArtic
        <Button variant="contained" color="secondary"  className={style.delete} onClick={startDelete}>
           Delete
         </Button>
-       <Button variant="contained" className={style.saveBtn} onClick={update}>
+       <Button disabled={!(!!title && message.length>0)} variant="contained" color="primary" className={style.saveBtn} onClick={update}>
           Save
         </Button>
        </div>

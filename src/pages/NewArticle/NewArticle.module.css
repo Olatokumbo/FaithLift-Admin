@@ -39,8 +39,14 @@
     width: fit-content !important;
     /* margin: auto !important; */
 }
+.selectForm{
+    margin: 0.5rem 0 !important;
+}
+.select{
+    width: 9rem !important;
+}
 .saveBtn{
-    background-color: rgb(21, 146, 21) !important;
-    color: white !important;
+    /* background-color: rgb(21, 146, 21) !important; */
+    /* color: white !important; */
     height: fit-content !important;
 }
