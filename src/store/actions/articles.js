@@ -59,4 +59,3 @@ export const fetchArticleInfo = (id) => {
       console.log(err.message);
     });
   } 
-  

@@ -6,7 +6,7 @@ import * as actionCreator from "../../store/actions";
 import moment from "moment";
 import style from "./MovieInfo.module.css";
 
-const MovieInfo = ({ fetchMovieInfo, movieInfo, updateMovie }) => {
+const MovieInfo = ({ fetchMovieInfo, movieInfo, updateMovie, deleteMovie }) => {
   const params = useParams();
   const [name, setName] = useState("");
   const [info, setInfo] = useState("");
@@ -30,6 +30,9 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo, updateMovie }) => {
     setCasts(casts.filter((cast) => cast !== removeCast));
   };
 
+  const startDelete = () => {
+    deleteMovie(params.id);
+  };
   const update = () => {
     updateMovie({
       id: params.id,
@@ -68,7 +71,26 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo, updateMovie }) => {
   }
   return (
     <div className={style.movieInfo}>
-      <Typography className={style.title}>Movie Info</Typography>
+      <div className={style.header}>
+        <Typography className={style.title}>Movie Info</Typography>
+        <div>
+          <Button
+            variant="contained"
+            color="secondary"
+            className={style.delete}
+            onClick={startDelete}
+          >
+            Delete
+          </Button>
+          <Button
+            variant="contained"
+            className={style.saveBtn}
+            onClick={update}
+          >
+            Save
+          </Button>
+        </div>
+      </div>
       <div className={style.inputContainer}>
         <TextField
           type="text"
@@ -227,9 +249,6 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo, updateMovie }) => {
           </div>
         </div>
       </div>
-      <Button variant="contained" className={style.saveBtn} onClick={update}>
-        Save
-      </Button>
     </div>
   );
 };
@@ -244,6 +263,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     fetchMovieInfo: (id) => dispatch(actionCreator.fetchMovieInfo(id)),
     updateMovie: (data) => dispatch(actionCreator.updateMovieInfo(data)),
+    deleteMovie: (id) => dispatch(actionCreator.deleteMovie(id)),
   };
 };
 

@@ -42,7 +42,6 @@ const Signin = ({error, startSignin, isLoading}) => {
               onChange={(e)=>setPassword(e.target.value)}
             />
             <Button
-              type="submit"
               className={style.signin}
               variant="contained"
               size="small"

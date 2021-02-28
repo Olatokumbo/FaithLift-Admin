@@ -1,15 +1,10 @@
-.articleInfo{
+.newArticle{
     padding: 1rem 3rem;
 }
 .header{
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
-.saveBtn{
-    background-color: rgb(21, 146, 21) !important;
-    color: white !important;
-    height: fit-content !important;
 }
 .title{
     font-size: 2rem !important;
@@ -22,6 +17,11 @@
     /* width: 100%; */
     margin: 1rem 1rem 1rem 0 !important;
     flex:1;
+}
+.previewPhoto{
+    max-width: 15rem;
+    max-height: 10rem;
+    display: block;
 }
 
 .inputContainer{
@@ -39,6 +39,8 @@
     width: fit-content !important;
     /* margin: auto !important; */
 }
-.delete{
-    margin-right: 5px !important;
+.saveBtn{
+    background-color: rgb(21, 146, 21) !important;
+    color: white !important;
+    height: fit-content !important;
 }

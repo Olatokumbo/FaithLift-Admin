@@ -25,9 +25,11 @@ const Articles = ({articles, fetchArticles}) => {
   return (
     <div className={style.articlesPage}>
       <Typography className={style.title}>Articles</Typography>
+      <Link to="/new/article">
       <Button variant="contained" size="large" color="primary">
         Add New Article
       </Button>
+      </Link>
       <TableContainer className={style.table} component={Paper}>
         <Table aria-label="simple table">
           <TableHead>

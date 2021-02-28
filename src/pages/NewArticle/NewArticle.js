@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Button, Typography, TextField } from "@material-ui/core";
 import PararaphCard from "../../components/ParagraphCard/ParagraphCard";
 import * as actionCreator from "../../store/actions";
 import { connect } from "react-redux";
-import { useParams } from "react-router-dom";
-import moment from "moment";
-import style from "./ArticleInfo.module.css";
+import style from "./NewArticle.module.css";
 
-const ArticleInfo = ({ articleInfo, fetchArticleInfo, updateArticle, deleteArticle }) => {
-  const params = useParams();
+const NewArticle = ( ) => {
   const [title, setTitle] = useState("");
   const [message, setMessage] = useState([]);
+  const [poster, setPoster] = useState(null);
+  const [displayPhoto, setDisplayPhoto] = useState("");
+
   const addMessage = (e) => {
     e.preventDefault();
     setMessage((prevMessage) =>
@@ -23,36 +23,15 @@ const ArticleInfo = ({ articleInfo, fetchArticleInfo, updateArticle, deleteArtic
     //   console.log("remove")
     setMessage(message.filter((keyword) => keyword !== removeText));
   };
-  const startDelete = () =>{
-    deleteArticle(params.id);
-  }
-  const update = () => {
-    updateArticle({id: params.id, title, message})
+  const previewPhoto = (files) => {
+    if (files) {
+      setDisplayPhoto(URL.createObjectURL(files));
+      setPoster(files);
+    }
   };
-  useEffect(() => {
-    fetchArticleInfo(params.id);
-  }, [fetchArticleInfo, params.id]);
-
-  useEffect(() => {
-    setTitle(articleInfo?.title);
-    setMessage(articleInfo?.message);
-  }, [articleInfo]);
-  if (!title) {
-    return <div>Loading...</div>;
-  }
   return (
-    <div className={style.articleInfo}>
-      <div className={style.header}>
-        <Typography className={style.title}>Edit Article Info</Typography>
-       <div>
-       <Button variant="contained" color="secondary"  className={style.delete} onClick={startDelete}>
-          Delete
-        </Button>
-       <Button variant="contained" className={style.saveBtn} onClick={update}>
-          Save
-        </Button>
-       </div>
-      </div>
+    <div className={style.newArticle}>
+        <Typography className={style.title}>New Article</Typography>
       <div className={style.inputContainer}>
         <TextField
           type="text"
@@ -66,12 +45,21 @@ const ArticleInfo = ({ articleInfo, fetchArticleInfo, updateArticle, deleteArtic
             shrink: true,
           }}
         />
-        <Typography>
-          Published Date:{" "}
-          {articleInfo
-            ? moment(articleInfo?.publishedDate.toDate()).format("MM/DD/YYYY")
-            : "Loading..."}
-        </Typography>
+         <TextField
+          type="file"
+          label="Poster"
+          variant="outlined"
+          accept="image/x-png,image/gif,image/jpeg"
+          size="small"
+          onChange={(e) => {
+            previewPhoto(e.target.files[0]);
+          }}
+          className={style.input}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        <img src={displayPhoto} className={style.previewPhoto} alt="preview" />
         <div className={style.messageContainer}>
           {message?.map((text, index) => {
             return (
@@ -109,22 +97,19 @@ const ArticleInfo = ({ articleInfo, fetchArticleInfo, updateArticle, deleteArtic
           </Button>
         </form>
       </div>
+      <Button variant="contained" className={style.saveBtn}>
+          Save
+        </Button>
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    articleInfo: state.articles.articleInfo,
-  };
-};
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchArticleInfo: (id) => dispatch(actionCreator.fetchArticleInfo(id)),
-    updateArticle: (data) => dispatch(actionCreator.updateArticleInfo(data)),
-    deleteArticle: (id) => dispatch(actionCreator.deleteArticle(id)),
+    // fetchArticleInfo: (id) => dispatch(actionCreator.fetchArticleInfo(id)),
+
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(ArticleInfo);
+export default connect(null, mapDispatchToProps)(NewArticle);
