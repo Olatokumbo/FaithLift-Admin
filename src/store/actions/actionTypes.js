@@ -20,3 +20,9 @@ export const ADD_ARTICLE_FAILED = "ADD_ARTICLE_FAILED";
 
 export const PROGRESS = "PROGRESS";
 export const RESET = "RESET";
+
+// Poster
+export const FETCH_POSTER = "FETCH_POSTER";
+export const UPLOAD_POSTER = "UPLOAD_POSTER";
+export const UPDATE_POSTER_SUCCESS = "UPDATE_POSTER_SUCCESS";
+export const UPDATE_POSTER_FAILED = "UPDATE_POSTER_FAILED";

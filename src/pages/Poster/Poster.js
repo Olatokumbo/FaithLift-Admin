@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TextField, Button, IconButton, Typography } from "@material-ui/core";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { connect } from "react-redux";
+import * as actionCreator from "../../store/actions";
 import style from "./Poster.module.css";
 
-const Poster = () => {
+const Poster = ({ posterInfo, fetchPosterInfo, updatePoster, updatePosterWithImage, isLoading }) => {
   const [title, setTitle] = useState("");
   const [info, setInfo] = useState("");
   const [youtubeUrl, setYoutubeUrl] = useState("");
@@ -11,6 +14,16 @@ const Poster = () => {
   const [displayPhoto, setDisplayPhoto] = useState("");
   const [poster, setPoster] = useState(null);
 
+  useEffect(() => {
+    fetchPosterInfo();
+  }, [fetchPosterInfo]);
+
+  useEffect(()=>{
+    setTitle(posterInfo?.title);
+    setInfo(posterInfo?.info);
+    setYoutubeUrl(posterInfo?.youtubeUrl);
+    setMovieId(posterInfo?.movieId)
+  }, [posterInfo])
   const previewPhoto = (files) => {
     if (files) {
       setDisplayPhoto(URL.createObjectURL(files));
@@ -20,6 +33,11 @@ const Poster = () => {
   const resetPhoto = () => {
     setDisplayPhoto("");
     setPoster("");
+  };
+
+  const update = () => {
+    if (!poster) updatePoster({ title, info, youtubeUrl, movieId });
+    else updatePosterWithImage({ title, info, youtubeUrl, movieId, poster });
   };
   return (
     <div className={style.poster}>
@@ -42,6 +60,11 @@ const Poster = () => {
           label="Info"
           variant="outlined"
           size="small"
+          multiline
+          rows={4}
+          inputProps={{
+            maxLength: 250,
+          }}
           value={info}
           onChange={(e) => setInfo(e.target.value)}
           className={style.input}
@@ -101,18 +124,35 @@ const Poster = () => {
         ) : (
           <div></div>
         )}
+        {isLoading ? <CircularProgress /> : <div></div>}
         <Button
-            variant="contained"
-            color="primary"
-            className={style.saveBtn}
-            disabled={!(!!title && !!info && !!youtubeUrl && !!movieId)}
-            // onClick={startDelete }
-          >
-            Save
-          </Button>
+          variant="contained"
+          color="primary"
+          className={style.saveBtn}
+          disabled={!(!!title && !!info && !!youtubeUrl && !!movieId) || (isLoading)}
+          onClick={update}
+        >
+          Save
+        </Button>
       </div>
     </div>
   );
 };
 
-export default Poster;
+const mapStateToProps = (state) => {
+  return {
+    posterInfo: state.poster.posterInfo,
+    isLoading: state.poster.loading,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchPosterInfo: () => dispatch(actionCreator.fetchPoster()),
+    updatePoster: (data) => dispatch(actionCreator.updatePoster(data)),
+    updatePosterWithImage: (data) =>
+      dispatch(actionCreator.updatePosterWithImage(data)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Poster);

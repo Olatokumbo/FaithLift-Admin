@@ -94,6 +94,7 @@ export const fetchArticleInfo = (id) => {
                   message: article.message,
                   category: article.category,
                   publishedDate: firebase.firestore.FieldValue.serverTimestamp(),
+                  poster: url
                 })
                 .then(() => {
                   dispatch({

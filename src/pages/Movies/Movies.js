@@ -29,7 +29,7 @@ const Movies = ({ movies, fetchMovies }) => {
       </Button>
       <Link to="/poster">
       <Button variant="contained" color="secondary">
-        Modify Poster
+        Edit Poster
       </Button>
       </Link>
       <TableContainer className={style.table} component={Paper}>

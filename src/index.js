@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import thunk from "redux-thunk";
 import { createStore, applyMiddleware, combineReducers, compose } from "redux";
-import { movieReducer, authReducer } from "./store/reducers";
+import { movieReducer, authReducer, posterReducer } from "./store/reducers";
 import { auth } from "./firebase/firebase";
 import * as actionTypes from "./store/actions/actionTypes";
 import App from "./App";
@@ -14,6 +14,7 @@ const rootReducer = combineReducers({
   movies: movieReducer,
   articles: articleReducer,
   auth: authReducer,
+  poster: posterReducer
 });
 
 const store = createStore(

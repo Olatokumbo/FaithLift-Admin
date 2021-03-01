@@ -93,6 +93,7 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo, updateMovie, deleteMovie }) => {
           </Button>
         </div>
       </div>
+      <Typography color='textSecondary'>Movie ID: {params.id}</Typography>
       <div className={style.inputContainer}>
         <TextField
           type="text"
@@ -113,6 +114,9 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo, updateMovie, deleteMovie }) => {
           multiline
           rows="6"
           size="small"
+          inputProps={{
+            maxLength: 250,
+          }}
           value={info}
           onChange={(e) => setInfo(e.target.value)}
           className={style.input}
@@ -237,7 +241,7 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo, updateMovie, deleteMovie }) => {
             </Button>
           </form>
           <div className={style.castList}>
-            {casts.map((name) => {
+            {casts?.map((name) => {
               return (
                 <Chip
                   color="primary"

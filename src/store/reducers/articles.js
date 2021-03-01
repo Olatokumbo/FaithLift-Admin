@@ -3,7 +3,7 @@ const initialState = {
   articleList: [],
   articleInfo: null,
   message: null,
-  progress: 0,
+  // progress: 0,
   successUpload: null,
   loading: false,
 };
@@ -25,11 +25,11 @@ const articleReducer = (state = initialState, action) => {
         ...state,
         loading: true,
       };
-    case actionTypes.PROGRESS:
-      return {
-        ...state,
-        progress: action.progress,
-      };
+    // case actionTypes.PROGRESS:
+    //   return {
+    //     ...state,
+    //     progress: action.progress,
+    //   };
     case actionTypes.ADD_ARTICLE_SUCCESS:
       return {
         ...state,
