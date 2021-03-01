@@ -1,0 +1,62 @@
+.newMovie{
+    padding: 2rem;
+}
+.title{
+    font-size: 2rem !important;
+    font-weight: 300 !important;
+    /* margin: 0 1rem !important;  */
+}
+.header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.input{
+    /* justify-self: center; */
+    /* width: 100%; */
+    margin: 1rem 1rem 1rem 0 !important;
+}
+
+.inputContainer{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+.durationContainer > h6{
+    margin: 0 1rem !important;
+}
+.movieHead, .dates, .duration{
+    display: flex;
+}
+.movieHead > *, .dates > *, .duration > *{
+    flex: 1;
+}
+.cast >div:last-child{
+    margin-left: 1rem;
+}
+.castContainer{
+    display: flex;
+    align-items: center;
+}
+
+.castList{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: fit-content;
+}
+
+.castList > *{
+    margin: 0.5rem 0 !important;
+}
+
+.saveBtn{
+    /* background-color: rgb(21, 146, 21) !important; */
+    color: white !important;
+}
+
+.previewPhoto{
+    max-width: 15rem;
+    max-height: 10rem;
+    display: block;
+}

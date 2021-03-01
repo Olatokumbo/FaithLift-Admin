@@ -8,6 +8,7 @@ import PublicRoute from "./hoc/PublicRoute";
 import MovieInfo from "./pages/MovieInfo/MovieInfo";
 import Articles from "./pages/Articles/Articles";
 import NewArticle from "./pages/NewArticle/NewArticle";
+import NewMovie from "./pages/NewMovie/NewMovie";
 import "./App.css";
 import ArticleInfo from "./pages/ArticleInfo/ArticleInfo";
 import Poster from "./pages/Poster/Poster";
@@ -19,6 +20,7 @@ const App = () => {
         <PrivateRoute path="/home" component={Home} />
         <PrivateRoute path="/movies" component={Movies} />
         <PrivateRoute path="/movie/:id" component={MovieInfo} />
+        <PrivateRoute path="/new/movie" component={NewMovie} />
         <PrivateRoute path="/articles" component={Articles} />
         <PrivateRoute path="/article/:id" component={ArticleInfo} />
         <PrivateRoute path="/new/article" component={NewArticle} />

@@ -1,23 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Typography, TextField, Button, Chip } from "@material-ui/core";
-import { useParams } from "react-router-dom";
 import { connect } from "react-redux";
 import * as actionCreator from "../../store/actions";
-import moment from "moment";
-import style from "./MovieInfo.module.css";
+import style from "./NewMovie.module.css";
 
-const MovieInfo = ({ fetchMovieInfo, movieInfo, updateMovie, deleteMovie }) => {
-  const params = useParams();
+const NewMovie = ({ addMovie }) => {
   const [name, setName] = useState("");
   const [info, setInfo] = useState("");
   const [director, setDirector] = useState("");
   const [writer, setWriter] = useState("");
   const [releasedDate, setReleasedDate] = useState(null);
-  const [year, setYear] = useState(0);
+  const [year, setYear] = useState(new Date().getFullYear());
   const [youtubeUrl, setYoutubeUrl] = useState("");
   const [hours, setHours] = useState(0);
   const [minutes, setMinutes] = useState(0);
   const [castMember, setCastMember] = useState("");
+  const [posterDisplay, setPosterDisplay] = useState("");
+  const [poster, setPoster] = useState("");
+  const [bannerDisplay, setBannerDisplay] = useState("");
+  const [banner, setBanner] = useState("");
   const [casts, setCasts] = useState([]);
 
   const addCast = (e) => {
@@ -30,58 +31,38 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo, updateMovie, deleteMovie }) => {
     setCasts(casts.filter((cast) => cast !== removeCast));
   };
 
-  const startDelete = () => {
-    deleteMovie(params.id);
-  };
-  const update = () => {
-    updateMovie({
-      id: params.id,
+  const add = () => {
+    addMovie({
       name,
       info,
       director,
       writer,
-      releasedDate: new Date(releasedDate),
       year,
+      releasedDate,
       youtubeUrl,
       duration: { hours, minutes },
       casts,
+      poster,
+      banner,
     });
   };
-  useEffect(() => {
-    fetchMovieInfo(params.id);
-  }, [fetchMovieInfo, params.id]);
-
-  useEffect(() => {
-    setName(movieInfo?.name);
-    setInfo(movieInfo?.info);
-    setDirector(movieInfo?.director);
-    setWriter(movieInfo?.writer);
-    setReleasedDate(
-      moment(movieInfo?.releasedDate.toDate()).format("YYYY-MM-DD")
-    );
-    setYear(movieInfo?.year);
-    setYoutubeUrl(movieInfo?.youtubeUrl);
-    setHours(movieInfo?.duration.hours);
-    setMinutes(movieInfo?.duration.minutes);
-    setCasts(movieInfo?.casts);
-  }, [movieInfo]);
-
-  if (!movieInfo) {
-    return <div>Loading...</div>;
-  }
+  const previewPosterPhoto = (files) => {
+    if (files) {
+      setPosterDisplay(URL.createObjectURL(files));
+      setPoster(files);
+    }
+  };
+  const previewBannerPhoto = (files) => {
+    if (files) {
+      setBannerDisplay(URL.createObjectURL(files));
+      setBanner(files);
+    }
+  };
   return (
-    <div className={style.movieInfo}>
+    <div className={style.newMovie}>
       <div className={style.header}>
-        <Typography className={style.title}>Movie Info</Typography>
+        <Typography className={style.title}>New Movie</Typography>
         <div>
-          <Button
-            variant="contained"
-            color="secondary"
-            className={style.delete}
-            onClick={startDelete}
-          >
-            Delete
-          </Button>
           <Button
             disabled={
               !(
@@ -93,19 +74,20 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo, updateMovie, deleteMovie }) => {
                 !!writer &&
                 !!director &&
                 !!releasedDate &&
+                !!poster &&
+                !!banner &&
                 casts.length > 0
               )
             }
             color="primary"
             variant="contained"
             className={style.saveBtn}
-            onClick={update}
+            onClick={add}
           >
             Save
           </Button>
         </div>
       </div>
-      <Typography color="textSecondary">Movie ID: {params.id}</Typography>
       <div className={style.inputContainer}>
         <TextField
           type="text"
@@ -266,23 +248,45 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo, updateMovie, deleteMovie }) => {
             })}
           </div>
         </div>
+        <TextField
+          type="file"
+          label="Poster"
+          variant="outlined"
+          accept="image/x-png,image/gif,image/jpeg"
+          size="small"
+          onChange={(e) => {
+            previewPosterPhoto(e.target.files[0]);
+          }}
+          className={style.input}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        <img src={posterDisplay} className={style.previewPhoto} alt="preview" />
+        <TextField
+          type="file"
+          label="Banner"
+          variant="outlined"
+          accept="image/x-png,image/gif,image/jpeg"
+          size="small"
+          onChange={(e) => {
+            previewBannerPhoto(e.target.files[0]);
+          }}
+          className={style.input}
+          InputLabelProps={{
+            shrink: true,
+          }}
+        />
+        <img src={bannerDisplay} className={style.previewPhoto} alt="preview" />
       </div>
     </div>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    movieInfo: state.movies.movieInfo,
-  };
-};
-
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchMovieInfo: (id) => dispatch(actionCreator.fetchMovieInfo(id)),
-    updateMovie: (data) => dispatch(actionCreator.updateMovieInfo(data)),
-    deleteMovie: (id) => dispatch(actionCreator.deleteMovie(id)),
+    addMovie: (data) => dispatch(actionCreator.addMovie(data)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(MovieInfo);
+export default connect(null, mapDispatchToProps)(NewMovie);

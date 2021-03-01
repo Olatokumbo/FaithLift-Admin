@@ -63,13 +63,36 @@ export const updateMovieInfo = (data) => {
 
 export const deleteMovie = (id) => {
   firestore
-  .collection("movies")
-  .doc(id)
-  .delete()
-  .then(()=>{
-    console.log("Document has been Deleted")
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
-}   
+    .collection("movies")
+    .doc(id)
+    .delete()
+    .then(() => {
+      console.log("Document has been Deleted");
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+export const addMovie = (data) => {
+  firestore
+    .collection("movies")
+    .add({
+      name: data.name,
+      info: data.info,
+      writer: data.writer,
+      director: data.director,
+      releasedDate: data.releasedDate,
+      year: data.year,
+      duration: data.duration,
+      casts: data.casts,
+      poster: data.poster,
+      banner: data.banner
+    })
+    .then(() => {
+      console.log("Document has been Deleted");
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};

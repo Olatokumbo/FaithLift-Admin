@@ -24,13 +24,15 @@ const Movies = ({ movies, fetchMovies }) => {
   return (
     <div className={style.moviesPage}>
       <Typography className={style.title}>Movies</Typography>
-      <Button className={style.btn} variant="contained" color="primary">
-        Add Movie
-      </Button>
+      <Link to="/new/movie">
+        <Button className={style.btn} variant="contained" color="primary">
+          Add Movie
+        </Button>
+      </Link>
       <Link to="/poster">
-      <Button variant="contained" color="secondary">
-        Edit Poster
-      </Button>
+        <Button variant="contained" color="secondary">
+          Edit Poster
+        </Button>
       </Link>
       <TableContainer className={style.table} component={Paper}>
         <Table aria-label="simple table">
