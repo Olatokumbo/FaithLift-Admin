@@ -1,0 +1,42 @@
+.poster{
+    padding: 2rem;
+}
+.inputContainer{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1rem;
+}
+.title{
+    font-size: 2rem !important;
+    font-weight: 300 !important;
+    /* margin: 0 1rem !important;  */
+}
+.input{
+    /* justify-self: center; */
+    /* width: 100%; */
+    margin: 1rem 1rem 1rem 0 !important;
+}
+
+.previewContainer{
+    display: flex;
+}
+
+.previewContainer > button{
+    height: initial !important;
+    width: initial !important;
+    border-radius: 0 !important;
+    background-color: brown !important;
+}
+.previewContainer > button:hover{
+    color: white !important;
+}
+.previewPhoto{
+    max-width: 15rem;
+    max-height: 10rem;
+    display: block;
+}
+
+.saveBtn{
+    width: fit-content !important;
+    margin: 1rem 0 !important;
+}

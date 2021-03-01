@@ -66,7 +66,7 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo, updateMovie, deleteMovie }) => {
     setCasts(movieInfo?.casts);
   }, [movieInfo]);
 
-  if (!name) {
+  if (!movieInfo) {
     return <div>Loading...</div>;
   }
   return (
@@ -83,6 +83,8 @@ const MovieInfo = ({ fetchMovieInfo, movieInfo, updateMovie, deleteMovie }) => {
             Delete
           </Button>
           <Button
+            disabled={!(!!name && !!info && !!hours && !!minutes && !!year && !!writer && !!director && !!releasedDate && casts.length>0)}
+            color="primary"
             variant="contained"
             className={style.saveBtn}
             onClick={update}

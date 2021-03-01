@@ -1,10 +1,10 @@
 .movieInfo{
-    padding: 1rem;
+    padding: 2rem;
 }
 .title{
     font-size: 2rem !important;
     font-weight: 300 !important;
-    margin: 0 1rem !important; 
+    /* margin: 0 1rem !important;  */
 }
 .header{
     display: flex;
@@ -51,7 +51,7 @@
 }
 
 .saveBtn{
-    background-color: rgb(21, 146, 21) !important;
+    /* background-color: rgb(21, 146, 21) !important; */
     color: white !important;
 }
 .delete{

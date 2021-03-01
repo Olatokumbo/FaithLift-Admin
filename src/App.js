@@ -10,6 +10,7 @@ import Articles from "./pages/Articles/Articles";
 import NewArticle from "./pages/NewArticle/NewArticle";
 import "./App.css";
 import ArticleInfo from "./pages/ArticleInfo/ArticleInfo";
+import Poster from "./pages/Poster/Poster";
 const App = () => {
   return (
     <Router>
@@ -21,6 +22,7 @@ const App = () => {
         <PrivateRoute path="/articles" component={Articles} />
         <PrivateRoute path="/article/:id" component={ArticleInfo} />
         <PrivateRoute path="/new/article" component={NewArticle} />
+        <PrivateRoute path="/poster" component={Poster} />
       </Switch>
     </Router>
   );

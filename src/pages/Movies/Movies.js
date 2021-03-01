@@ -27,9 +27,11 @@ const Movies = ({ movies, fetchMovies }) => {
       <Button className={style.btn} variant="contained" color="primary">
         Add Movie
       </Button>
-      <Button className={style.btn} variant="contained" color="secondary">
-        Change Poster
+      <Link to="/poster">
+      <Button variant="contained" color="secondary">
+        Modify Poster
       </Button>
+      </Link>
       <TableContainer className={style.table} component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
