@@ -9,6 +9,9 @@ export const PROCESSING = "PROCESSING";
 export const FETCH_MOVIES = "FETCH_MOVIES";
 export const FETCH_MOVIE_INFO = "FETCH_MOVIE_INFO";
 export const UPDATE_MOVIE = "UPDATE_MOVIE";
+export const UPLOAD_MOVIE = "UPLOAD_MOVIE";
+export const ADD_MOVIE_SUCCESS = "ADD_MOVIE_SUCCESS";
+export const ADD_MOVIE_FAILED = "ADD_MOVIE_FAILED";
 
 // Articles
 export const FETCH_ARTICLES = "FETCH_ARTICLES";

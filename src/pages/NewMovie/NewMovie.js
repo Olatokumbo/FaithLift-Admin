@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { Typography, TextField, Button, Chip } from "@material-ui/core";
 import { connect } from "react-redux";
 import * as actionCreator from "../../store/actions";
+import CircularProgress from "@material-ui/core/CircularProgress";
 import style from "./NewMovie.module.css";
 
-const NewMovie = ({ addMovie }) => {
+const NewMovie = ({ addMovie, isLoading }) => {
   const [name, setName] = useState("");
   const [info, setInfo] = useState("");
   const [director, setDirector] = useState("");
@@ -42,8 +43,7 @@ const NewMovie = ({ addMovie }) => {
       youtubeUrl,
       duration: { hours, minutes },
       casts,
-      poster,
-      banner,
+      images: [poster, banner],
     });
   };
   const previewPosterPhoto = (files) => {
@@ -62,7 +62,8 @@ const NewMovie = ({ addMovie }) => {
     <div className={style.newMovie}>
       <div className={style.header}>
         <Typography className={style.title}>New Movie</Typography>
-        <div>
+        <div style={{ display: "flex" }}>
+          {isLoading ? <CircularProgress /> : <div></div>}
           <Button
             disabled={
               !(
@@ -77,7 +78,7 @@ const NewMovie = ({ addMovie }) => {
                 !!poster &&
                 !!banner &&
                 casts.length > 0
-              )
+              ) || isLoading
             }
             color="primary"
             variant="contained"
@@ -283,10 +284,16 @@ const NewMovie = ({ addMovie }) => {
   );
 };
 
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.movies.loading,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     addMovie: (data) => dispatch(actionCreator.addMovie(data)),
   };
 };
 
-export default connect(null, mapDispatchToProps)(NewMovie);
+export default connect(mapStateToProps, mapDispatchToProps)(NewMovie);

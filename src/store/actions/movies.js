@@ -1,5 +1,5 @@
 import * as actionTypes from "./actionTypes";
-import { firestore } from "../../firebase/firebase";
+import { firestore, storage } from "../../firebase/firebase";
 
 export const fetchMovies = () => {
   return (dispatch) => {
@@ -75,24 +75,120 @@ export const deleteMovie = (id) => {
 };
 
 export const addMovie = (data) => {
-  firestore
-    .collection("movies")
-    .add({
-      name: data.name,
-      info: data.info,
-      writer: data.writer,
-      director: data.director,
-      releasedDate: data.releasedDate,
-      year: data.year,
-      duration: data.duration,
-      casts: data.casts,
-      poster: data.poster,
-      banner: data.banner
-    })
-    .then(() => {
-      console.log("Document has been Deleted");
-    })
-    .catch((err) => {
-      console.log(err.message);
+  console.log("Adding Movie...");
+  return (dispatch) => {
+    dispatch({ type: actionTypes.UPLOAD_MOVIE });
+    const promises = [];
+    const imageUrls = [];
+    data.images.forEach((image) => {
+      const name = Date.now().toString() + Math.random(3).toFixed(3);
+      let uploadTask = storage.ref(`movies/${name}`).put(image);
+      promises.push(uploadTask);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          var progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          // dispatch({type:actionTypes.PROGRESS, progress});
+          console.log(progress);
+        },
+        (error) => {
+          console.log(error);
+          alert(error.message);
+        },
+        () => {
+          storage
+            .ref("movies")
+            .child(name) //image.name
+            .getDownloadURL()
+            .then((url) => {
+              //  Add your firestore query here
+              console.log(url);
+              imageUrls.push(url);
+            });
+        }
+      );
     });
+    Promise.all(promises)
+      .then(() => {
+        firestore
+          .collection("movies")
+          .add({
+            name: data.name,
+            info: data.info,
+            writer: data.writer,
+            director: data.director,
+            releasedDate: data.releasedDate,
+            year: data.year,
+            duration: data.duration,
+            casts: data.casts,
+            poster: imageUrls[0],
+            banner: imageUrls[1],
+          })
+          .then(() => {
+            dispatch({
+              type: actionTypes.ADD_ARTICLE_SUCCESS,
+              message: "New Article has been posted",
+            });
+            console.log("A new movie has been Added");
+          })
+          .catch((err) => {
+            dispatch({
+              type: actionTypes.ADD_ARTICLE_FAILED,
+              message: err.message,
+            });
+            alert(err.message);
+          });
+      })
+      .catch((err) => console.log(err.code));
+  };
 };
+
+// const onUploadSubmission = e => {
+//   e.preventDefault(); // prevent page refreshing
+//     const promises = [];
+//     files.forEach(file => {
+//      const uploadTask =
+//       firebase.storage().ref().child(`your/file/path/${file.name}`).put(file);
+//         promises.push(uploadTask);
+//         uploadTask.on(
+//            firebase.storage.TaskEvent.STATE_CHANGED,
+//            snapshot => {
+//             const progress =
+//               (snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+//                if (snapshot.state === firebase.storage.TaskState.RUNNING) {
+//                 console.log(`Progress: ${progress}%`);
+//                }
+//              },
+//              error => console.log(error.code),
+//              async () => {
+//                const downloadURL = await uploadTask.snapshot.ref.getDownloadURL();
+//                 // do something with the url
+//               }
+//              );
+//            });
+//        Promise.all(promises)
+//         .then(() => alert('All files uploaded'))
+//         .catch(err => console.log(err.code));
+//  }
+
+// firestore
+// .collection("movies")
+// .add({
+//   name: data.name,
+//   info: data.info,
+//   writer: data.writer,
+//   director: data.director,
+//   releasedDate: data.releasedDate,
+//   year: data.year,
+//   duration: data.duration,
+//   casts: data.casts,
+//   poster: data.poster,
+//   banner: data.banner
+// })
+// .then(() => {
+//   console.log("Document has been Deleted");
+// })
+// .catch((err) => {
+//   console.log(err.message);
+// });
