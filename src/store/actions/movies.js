@@ -62,7 +62,8 @@ export const updateMovieInfo = (data) => {
 };
 
 export const deleteMovie = (id) => {
-  firestore
+  return ()=>{
+    firestore
     .collection("movies")
     .doc(id)
     .delete()
@@ -72,6 +73,7 @@ export const deleteMovie = (id) => {
     .catch((err) => {
       console.log(err.message);
     });
+  }
 };
 
 export const addMovie = (data) => {
@@ -80,7 +82,7 @@ export const addMovie = (data) => {
     dispatch({ type: actionTypes.UPLOAD_MOVIE });
     const promises = [];
     const imageUrls = [];
-    data.images.forEach((image) => {
+    data.images.forEach((image, index) => {
       const name = Date.now().toString() + Math.random(3).toFixed(3);
       let uploadTask = storage.ref(`movies/${name}`).put(image);
       promises.push(uploadTask);
@@ -96,7 +98,7 @@ export const addMovie = (data) => {
           console.log(error);
           alert(error.message);
         },
-        () => {
+        async () => {
           storage
             .ref("movies")
             .child(name) //image.name
@@ -105,40 +107,45 @@ export const addMovie = (data) => {
               //  Add your firestore query here
               console.log(url);
               imageUrls.push(url);
+              console.log('index', index);
+              if(index===1){
+                console.log('Save To Db')
+                firestore
+                .collection("movies")
+                .add({
+                  name: data.name,
+                  info: data.info,
+                  writer: data.writer,
+                  director: data.director,
+                  releasedDate: data.releasedDate,
+                  year: data.year,
+                  duration: data.duration,
+                  casts: data.casts,
+                  poster: imageUrls[0],
+                  coverPhoto: imageUrls[1],
+                })
+                .then(() => {
+                  dispatch({
+                    type: actionTypes.ADD_MOVIE_SUCCESS,
+                    message: "New Article has been posted",
+                  });
+                  alert("A new movie has been Added");
+                })
+                .catch((err) => {
+                  dispatch({
+                    type: actionTypes.ADD_MOVIE_FAILED,
+                    message: err.message,
+                  });
+                  alert(err.message);
+                });
+              }
             });
         }
       );
     });
     Promise.all(promises)
       .then(() => {
-        firestore
-          .collection("movies")
-          .add({
-            name: data.name,
-            info: data.info,
-            writer: data.writer,
-            director: data.director,
-            releasedDate: data.releasedDate,
-            year: data.year,
-            duration: data.duration,
-            casts: data.casts,
-            poster: imageUrls[0],
-            banner: imageUrls[1],
-          })
-          .then(() => {
-            dispatch({
-              type: actionTypes.ADD_ARTICLE_SUCCESS,
-              message: "New Article has been posted",
-            });
-            console.log("A new movie has been Added");
-          })
-          .catch((err) => {
-            dispatch({
-              type: actionTypes.ADD_ARTICLE_FAILED,
-              message: err.message,
-            });
-            alert(err.message);
-          });
+        console.log("Upload complete")
       })
       .catch((err) => console.log(err.code));
   };

@@ -39,7 +39,7 @@ const NewMovie = ({ addMovie, isLoading }) => {
       director,
       writer,
       year,
-      releasedDate,
+      releasedDate: new Date(releasedDate),
       youtubeUrl,
       duration: { hours, minutes },
       casts,
@@ -236,9 +236,10 @@ const NewMovie = ({ addMovie, isLoading }) => {
             </Button>
           </form>
           <div className={style.castList}>
-            {casts?.map((name) => {
+            {casts?.map((name, index) => {
               return (
                 <Chip
+                  key={index}
                   color="primary"
                   label={name}
                   onDelete={() => {

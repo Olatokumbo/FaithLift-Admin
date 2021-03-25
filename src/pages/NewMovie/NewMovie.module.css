@@ -57,6 +57,6 @@
 
 .previewPhoto{
     max-width: 15rem;
-    max-height: 10rem;
+    max-height: initial;
     display: block;
 }
